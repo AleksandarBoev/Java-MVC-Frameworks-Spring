@@ -93,3 +93,12 @@ input, .button {
     outline: none;
 }
 
+p.error-title {
+    text-align: center;
+    font-size: 25pt;
+}
+
+p.error-message {
+    font-size: 18pt;
+}
+

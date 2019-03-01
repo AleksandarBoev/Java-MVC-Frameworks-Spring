@@ -14,9 +14,9 @@
         <div id="regOffer">
             <form action="/reg" method="post">
                 <h2>Register offer</h2>
-                <input type="number" name="rentPrice" placeholder="Rent price....">
+                <input type="number" step="0.01" name="rentPrice" placeholder="Rent price....">
                 <input type="text" name="apartmentType" placeholder="Apartment type...">
-                <input type="number" name="commissionRate" placeholder="Commission rate...">
+                <input type="number" step="0.01" name="commissionRate" placeholder="Commission rate %">
                 <button name="register-offer" class="button">Register</button>
             </form>
         </div>
