@@ -26,12 +26,13 @@
                         <a class="nav-link nav-link-white active" th:href="@{/}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-white active" th:href="@{/login}">Login</a>
+                        <a class="nav-link nav-link-white active" th:href="@{/user/login}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-white active" th:href="@{/register}">Register</a>
+                        <a class="nav-link nav-link-white active" th:href="@{/user/register}">Register</a>
                     </li>
                 </ul>
+
             </div>
         </nav>
     </header>
@@ -39,7 +40,7 @@
         <hr class="bg-exodia hr-2"/>
         <h1 class="text-center text-exodia">Login</h1>
         <hr class="bg-exodia w-25 hr-2"/>
-        <form class="mx-auto w-25" th:method="post" th:action="@{/login}">
+        <form class="mx-auto w-25" th:method="post" th:action="@{/user/login}">
             <div class="form-group">
                 <label for="username" class="text-exodia">Username</label>
                 <input type="text" class="form-control" id="username" placeholder="Username..." name="username">

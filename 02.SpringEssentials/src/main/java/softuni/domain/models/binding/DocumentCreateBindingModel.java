@@ -1,6 +1,6 @@
 package softuni.domain.models.binding;
 
-public class DocumentBindingModel {
+public class DocumentCreateBindingModel {
     private String title;
     private String content;
 

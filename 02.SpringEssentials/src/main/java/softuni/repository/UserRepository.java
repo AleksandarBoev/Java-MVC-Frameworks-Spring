@@ -6,4 +6,5 @@ import softuni.domain.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+    User findUserByUsername(String username);
 }

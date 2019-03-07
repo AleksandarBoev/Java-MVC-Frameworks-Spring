@@ -11,7 +11,7 @@ public class User extends BaseEntity {
     private String password;
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     public String getUsername() {
         return this.username;
     }
@@ -29,7 +29,7 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     public String getEmail() {
         return this.email;
     }

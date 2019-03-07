@@ -20,11 +20,11 @@ public class DocumentServiceImpl extends BaseServiceImpl implements DocumentServ
     }
 
     @Override
-    public boolean save(DocumentServiceModel documentServiceModel) {
+    public DocumentServiceModel register(DocumentServiceModel documentServiceModel) {
         //TODO validations
         Document document =
                 this.documentRepository.save(super.getModelMapper().map(documentServiceModel, Document.class));
         documentServiceModel.setId(document.getId());
-        return true;
+        return null; //TODO not finished
     }
 }

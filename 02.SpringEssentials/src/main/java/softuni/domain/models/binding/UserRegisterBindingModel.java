@@ -1,6 +1,6 @@
 package softuni.domain.models.binding;
 
-public class UserBindingModel {
+public class UserRegisterBindingModel {
     private String username;
     private String password;
     private String confirmPassword;
