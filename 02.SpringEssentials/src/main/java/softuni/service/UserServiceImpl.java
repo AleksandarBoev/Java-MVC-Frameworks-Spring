@@ -11,7 +11,6 @@ import softuni.repository.UserRepository;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl implements UserService {

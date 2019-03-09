@@ -6,9 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>EXODIA</title>
-    <link rel="stylesheet" th:href="@{css/reset-css.css}">
-    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/reset-css.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div class="container-fluid">
@@ -27,10 +27,10 @@
                         <a class="nav-link nav-link-white active" th:href="@{/}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-white active" th:href="@{/schedule}">Schedule</a>
+                        <a class="nav-link nav-link-white active" th:href="@{/document/schedule}">Schedule</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-white active" th:href="@{/logout}">Logout</a>
+                        <a class="nav-link nav-link-white active" th:href="@{/user/logout}">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -39,69 +39,36 @@
     <main class="mt-3">
         <hr class="bg-exodia hr-2"/>
         <div class="print-container container-fluid">
-            <div class="row mb-4 d-flex justify-content-between">
-                <div class="print-scheduled col-md-2 bg-exodia rounded">
-                    <h5 class="text-center text-white font-weight-bold py-3 mt-3">An essay for...</h5>
-                    <hr class="bg-white">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Print</button>
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Details</button>
-                    </div>
+            <th:block th:each="documentSet: ${documents}">
+                <div class="row mb-4 d-flex justify-content-between">
+                    <th:block th:each="document: ${documentSet}">
+                        <th:block th:if="${document != null}">
+                            <div class="print-scheduled col-md-2 bg-exodia rounded">
+                                <h5 th:text="${document.getTrimmedTitle()}"
+                                    class="text-center text-white font-weight-bold py-3 mt-3"></h5>
+                                <hr class="bg-white">
+                                <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
+
+                                    <a th:href="@{/document/details(id=${document.getId()})}">
+                                        <button th:text="Details"
+                                                class="btn bg-exodia text-white font-weight-bold mb-3">
+                                        </button>
+                                    </a>
+                                    <a th:href="@{/document/print(id=${document.getId()})}">
+                                        <button th:text="Print"
+                                                class="btn bg-exodia text-white font-weight-bold mb-3">
+                                        </button>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </th:block>
+                        <th:block th:unless="${document != null}">
+                            <div class="col-md-2"></div>
+                        </th:block>
+                    </th:block>
                 </div>
-                <div class="print-scheduled col-md-2 bg-exodia rounded">
-                    <h5 class="text-center text-white font-weight-bold py-3 mt-3">Job Offering...</h5>
-                    <hr class="bg-white">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Print</button>
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Details</button>
-                    </div>
-                </div>
-                <div class="print-scheduled col-md-2 bg-exodia rounded">
-                    <h5 class="text-center text-white font-weight-bold py-3 mt-3">Tasks Report...</h5>
-                    <hr class="bg-white">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Print</button>
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Details</button>
-                    </div>
-                </div>
-                <div class="print-scheduled col-md-2 bg-exodia rounded">
-                    <h5 class="text-center text-white font-weight-bold py-3 mt-3">Tech Support...</h5>
-                    <hr class="bg-white">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Print</button>
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Details</button>
-                    </div>
-                </div>
-                <div class="print-scheduled col-md-2 bg-exodia rounded">
-                    <h5 class="text-center text-white font-weight-bold py-3 mt-3">Execution fa...</h5>
-                    <hr class="bg-white">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Print</button>
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Details</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-4 d-flex justify-content-between">
-                <div class="print-scheduled col-md-2 bg-exodia rounded">
-                    <h5 class="text-center text-white font-weight-bold py-3 mt-3">Logs 27/05/2...</h5>
-                    <hr class="bg-white">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Print</button>
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Details</button>
-                    </div>
-                </div>
-                <div class="print-scheduled col-md-2 bg-exodia rounded">
-                    <h5 class="text-center text-white font-weight-bold py-3 mt-3">Interview of...</h5>
-                    <hr class="bg-white">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Print</button>
-                        <button class="btn bg-exodia text-white font-weight-bold mb-3">Details</button>
-                    </div>
-                </div>
-                <div class="print-scheduled col-md-2 bg-white rounded"></div>
-                <div class="print-scheduled col-md-2 bg-white rounded"></div>
-                <div class="print-scheduled col-md-2 bg-white rounded"></div>
-            </div>
+            </th:block>
         </div>
         <hr class="bg-exodia hr-2 mt-5"/>
     </main>

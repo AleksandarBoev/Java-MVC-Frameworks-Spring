@@ -27,8 +27,8 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage(HttpSession httpSession) {
-        if (super.isLoggedIn()) //if someone in this sessions is already logged in
+    public String getLoginPage() {
+        if (super.isLoggedIn())
             return "redirect:/";
 
         return "login";
