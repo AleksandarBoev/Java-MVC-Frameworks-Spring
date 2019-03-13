@@ -25,7 +25,6 @@ public class SupplierServiceImpl implements SupplierService {
         this.supplierRepository.saveAndFlush(supplier);
 
         return this.modelMapper.map(supplier, SupplierServiceModel.class);
-
     }
 
     @Override
