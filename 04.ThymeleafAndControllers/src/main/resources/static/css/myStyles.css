@@ -1,0 +1,11 @@
+.resident-evil-white {
+    color: white;
+}
+
+.resident-evil-dark-red {
+    background-color: #900C45;
+}
+
+a:hover {
+    color: lightgray;
+}
