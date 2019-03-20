@@ -6,9 +6,11 @@ import residentevil_app.domain.enums.Mutation;
 
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-public class VirusBindingModel {
+public class VirusEditModel {
     private static final int NAME_MIN_LENGTH = 3;
     private static final int NAME_MAX_LENGTH = 10;
     private static final String INVALID_NAME_LENGTH_MESSAGE =
@@ -54,8 +56,26 @@ public class VirusBindingModel {
     private Double turnoverRate;
     private Integer hoursUntilTurn;
     private Magnitude magnitude;
-    private Date releasedOn;
     private Set<String> capitalIds;
+
+    public VirusEditModel() {
+    }
+
+    public VirusEditModel(VirusEditModel anotherVirusEditModel) {
+        this.id = anotherVirusEditModel.id;
+        this.name = anotherVirusEditModel.name;
+        this.description = anotherVirusEditModel.description;
+        this.sideEffects = anotherVirusEditModel.sideEffects;
+        this.creator = anotherVirusEditModel.creator;
+        this.isDeadly = anotherVirusEditModel.isDeadly;
+        this.isCurable = anotherVirusEditModel.isCurable;
+        this.mutation = anotherVirusEditModel.mutation;
+        this.turnoverRate = anotherVirusEditModel.turnoverRate;
+        this.hoursUntilTurn = anotherVirusEditModel.hoursUntilTurn;
+        this.magnitude = anotherVirusEditModel.magnitude;
+        this.capitalIds = new HashSet<>();
+        this.capitalIds.addAll(anotherVirusEditModel.capitalIds);
+    }
 
     public String getId() {
         return this.id;
@@ -156,16 +176,6 @@ public class VirusBindingModel {
         this.magnitude = magnitude;
     }
 
-//    @PresentOrFuture(message = INVALID_DATE_MESSAGE) //TODO no idea how to fix this
-    @DateTimeFormat(pattern = DATE_TIME_FORMAT)
-    public Date getReleasedOn() {
-        return this.releasedOn;
-    }
-
-    public void setReleasedOn(Date releasedOn) {
-        this.releasedOn = releasedOn;
-    }
-
     @NotEmpty(message = INVALID_NUMBER_OF_CAPITALS_SELECTED_MESSAGE)
     public Set<String> getCapitalIds() {
         return this.capitalIds;
@@ -173,5 +183,43 @@ public class VirusBindingModel {
 
     public void setCapitalIds(Set<String> capitalIds) {
         this.capitalIds = capitalIds;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // self check
+        if (this == object)
+            return true;
+        // null check
+        if (object == null)
+            return false;
+        // type check and cast
+        if (getClass() != object.getClass())
+            return false;
+        VirusEditModel otherVirus = (VirusEditModel) object;
+        // field comparison
+
+        boolean areEqual = this.name.equals(otherVirus.name) &&
+                this.isCurable.equals(otherVirus.isCurable) &&
+                this.isDeadly.equals(otherVirus.isDeadly) &&
+                this.id.equals(otherVirus.id) &&
+                this.sideEffects.equals(otherVirus.sideEffects) &&
+                this.turnoverRate.equals(otherVirus.turnoverRate) &&
+                this.description.equals(otherVirus.description) &&
+                this.hoursUntilTurn.equals(otherVirus.hoursUntilTurn) &&
+                this.mutation.equals(otherVirus.mutation) &&
+                this.magnitude.equals(otherVirus.magnitude) &&
+                this.creator.equals(otherVirus.creator) &&
+                this.capitalIds.size() == otherVirus.capitalIds.size();
+
+        if (!areEqual)
+            return false;
+
+        for (String capitalId : this.capitalIds) {
+            if (!otherVirus.capitalIds.contains(capitalId))
+                return false;
+        }
+
+        return true;
     }
 }

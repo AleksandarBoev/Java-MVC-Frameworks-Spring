@@ -1,16 +1,14 @@
-package residentevil_app.domain.entities;
+package residentevil_app.domain.models.service;
 
 import residentevil_app.domain.enums.Magnitude;
 import residentevil_app.domain.enums.Mutation;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
-@Entity
-@Table(name = "viruses")
-public class Virus extends BaseEntity {
+public class VirusServiceModel {
+    private String id;
     private String name;
     private String description;
     private String sideEffects;
@@ -22,9 +20,16 @@ public class Virus extends BaseEntity {
     private Integer hoursUntilTurn;
     private Magnitude magnitude;
     private Date releasedOn;
-    private Set<Capital> capitals;
+    private Set<CapitalServiceModel> capitals;
 
-    @Column(nullable = false, length = 10)
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -33,8 +38,6 @@ public class Virus extends BaseEntity {
         this.name = name;
     }
 
-    @Column(nullable = false, columnDefinition = "TEXT", length = 100)
-    //using TEXT when max length is 100... seems useless
     public String getDescription() {
         return this.description;
     }
@@ -43,7 +46,6 @@ public class Virus extends BaseEntity {
         this.description = description;
     }
 
-    @Column(name = "side_effects", length = 50)
     public String getSideEffects() {
         return this.sideEffects;
     }
@@ -52,7 +54,6 @@ public class Virus extends BaseEntity {
         this.sideEffects = sideEffects;
     }
 
-    @Column
     public String getCreator() {
         return this.creator;
     }
@@ -61,7 +62,6 @@ public class Virus extends BaseEntity {
         this.creator = creator;
     }
 
-    @Column(name = "is_deadly")
     public Boolean getDeadly() {
         return this.isDeadly;
     }
@@ -70,7 +70,6 @@ public class Virus extends BaseEntity {
         isDeadly = deadly;
     }
 
-    @Column(name = "is_curable")
     public Boolean getCurable() {
         return this.isCurable;
     }
@@ -79,8 +78,6 @@ public class Virus extends BaseEntity {
         isCurable = curable;
     }
 
-    @Column
-    @Enumerated(EnumType.STRING)
     public Mutation getMutation() {
         return this.mutation;
     }
@@ -89,7 +86,6 @@ public class Virus extends BaseEntity {
         this.mutation = mutation;
     }
 
-    @Column(name = "turnover_rate")
     public Double getTurnoverRate() {
         return this.turnoverRate;
     }
@@ -98,7 +94,6 @@ public class Virus extends BaseEntity {
         this.turnoverRate = turnoverRate;
     }
 
-    @Column(name = "hours_until_turn")
     public Integer getHoursUntilTurn() {
         return this.hoursUntilTurn;
     }
@@ -107,8 +102,6 @@ public class Virus extends BaseEntity {
         this.hoursUntilTurn = hoursUntilTurn;
     }
 
-    @Column
-    @Enumerated(EnumType.STRING)
     public Magnitude getMagnitude() {
         return this.magnitude;
     }
@@ -117,7 +110,6 @@ public class Virus extends BaseEntity {
         this.magnitude = magnitude;
     }
 
-    @Column(name = "released_on", updatable = false)
     public Date getReleasedOn() {
         return this.releasedOn;
     }
@@ -126,21 +118,11 @@ public class Virus extends BaseEntity {
         this.releasedOn = releasedOn;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "viruses_capitals",
-            joinColumns = @JoinColumn(
-                    name = "virus_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "capital_id",
-                    referencedColumnName = "id"))
-    public Set<Capital> getCapitals() {
+    public Set<CapitalServiceModel> getCapitals() {
         return this.capitals;
     }
 
-    public void setCapitals(Set<Capital> capitals) {
+    public void setCapitals(Set<CapitalServiceModel> capitals) {
         this.capitals = capitals;
     }
 }
