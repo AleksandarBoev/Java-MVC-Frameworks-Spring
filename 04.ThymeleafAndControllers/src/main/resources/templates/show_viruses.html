@@ -32,7 +32,12 @@
                         <td th:text="${#dates.format(currentVirusViewModel.releasedOn, 'dd-MMM-yyyy')}"></td>
                         <td>
                             <a th:href="@{/edit-virus/(id=${currentVirusViewModel.getId()})}">
-                                <button type="button" class="btn">Edit</button>
+                                <button type="button" class="btn btn-outline-secondary">Edit</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/delete-virus/(id=${currentVirusViewModel.getId()})}">
+                                <button type="button" class="btn btn-outline-secondary">Delete</button>
                             </a>
                         </td>
                     </tr>

@@ -27,6 +27,7 @@ public class EditVirusController {
     private VirusEditModel virusEditModel;
     private VirusEditModel originalEditModel;
     private List<CapitalServiceModel> capitalServiceModels;
+    private VirusServiceModel originalServiceModel;
 
     @Autowired
     public EditVirusController(CapitalService capitalService, VirusService virusService, ModelMapper modelMapper) {
@@ -43,10 +44,10 @@ public class EditVirusController {
     @GetMapping //not really a "slim" controller...
     public ModelAndView getEditVirusPage(@RequestParam(name = "id", required = true) String virusId,
                                    ModelAndView modelAndView) {
-        VirusServiceModel virusServiceModel = this.virusService.findVirusById(virusId);
-        this.virusEditModel = this.modelMapper.map
-                (virusServiceModel, VirusEditModel.class); //TODO not sure if this is good practise
-        Set<String> capitalIds = virusServiceModel.getCapitals()
+       this.originalServiceModel = this.virusService.findVirusById(virusId);
+       this.virusEditModel = this.modelMapper.map
+                (this.originalServiceModel, VirusEditModel.class); //TODO not sure if this is good practise
+        Set<String> capitalIds = this.originalServiceModel.getCapitals()
                 .stream()
                 .map(c -> c.getId())
                 .collect(Collectors.toSet());
@@ -68,6 +69,9 @@ public class EditVirusController {
                                     BindingResult bindingResult,
                                     ModelAndView modelAndView) {
         if (bindingResult.hasErrors()) {
+            if (virusEditModel.getCapitalIds() == null)
+                virusEditModel.setCapitalIds(this.virusEditModel.getCapitalIds());
+
             this.virusEditModel = virusEditModel;
             modelAndView.addObject("allCapitals", this.capitalServiceModels);
             modelAndView.addObject("virusViewEditModel", this.virusEditModel);
@@ -83,6 +87,8 @@ public class EditVirusController {
         VirusServiceModel editedVirusServiceModel =
                 this.modelMapper.map(virusEditModel, VirusServiceModel.class);
         editedVirusServiceModel.setCapitals(this.capitalService.getAllCapitalsByIds(virusEditModel.getCapitalIds()));
+        editedVirusServiceModel.setId(this.originalServiceModel.getId());
+        editedVirusServiceModel.setReleasedOn(this.originalServiceModel.getReleasedOn());
         this.virusService.editVirus(editedVirusServiceModel);
 
         return modelAndView;

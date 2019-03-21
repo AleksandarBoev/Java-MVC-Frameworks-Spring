@@ -58,7 +58,9 @@ public class VirusServiceImpl implements VirusService {
         Virus virus = this.virusRepository.findById(id).orElse(null);
         return this.modelMapper.map(virus, VirusServiceModel.class);
     }
-
+    //TODO problems are: the edit model does not have a date on it. So the serviceModel will have null when mapping
+    //so that means the entity's date will become null. Also editedModel does not have an id. So entity
+    //can't be updated. Also isDeadly is null for some reason
     @Override
     public void editVirus(VirusServiceModel editedVirusServiceModel) {
         Virus virus = this.modelMapper.map(editedVirusServiceModel, Virus.class);
@@ -69,5 +71,13 @@ public class VirusServiceImpl implements VirusService {
         virus.setCapitals(capitals);
 
         virus = this.virusRepository.saveAndFlush(virus);
+    }
+
+    @Override
+    public void deleteVirus(String id) {
+        if (!this.virusRepository.existsById(id))
+            return;
+
+        this.virusRepository.deleteById(id);
     }
 }

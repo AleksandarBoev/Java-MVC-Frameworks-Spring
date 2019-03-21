@@ -14,7 +14,6 @@
             <h1>Edit a virus!</h1>
         </header>
         <main>
-            <h1 th:text="|Editing virus with name ${virusViewEditModel.name}|"></h1>
             <form th:object="${virusEditModel}" th:action="@{/edit-virus}" th:method="post"
                   style="margin-top: 30px; margin-bottom: 30px">
                 <div class="form-group">

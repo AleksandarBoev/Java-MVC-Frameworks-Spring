@@ -12,4 +12,6 @@ public interface VirusService {
     VirusServiceModel findVirusById(String id);
 
     void editVirus(VirusServiceModel editedVirusServiceModel);
+
+    void deleteVirus(String id);
 }
