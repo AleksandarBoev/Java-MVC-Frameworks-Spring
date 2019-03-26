@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Show viruses</title>
+    <th:block th:replace="fragments/head_fragment">
+    </th:block>
+</head>
+<body>
+<th:block th:replace="fragments/nav_fragment">
+</th:block>
+<div class="container">
+    <header>
+        <h1>All Viruses</h1>
+    </header>
+    <main>
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Magnitude</th>
+                    <th>Released On</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="currentVirusViewModel, iStat: ${virusViewModels}">
+                    <tr>
+                        <td th:text="${iStat.count}"></td>
+                        <td th:text="${currentVirusViewModel.name}"></td>
+                        <td th:text="${currentVirusViewModel.magnitude}"></td>
+                        <td th:text="${#dates.format(currentVirusViewModel.releasedOn, 'dd-MMM-yyyy')}"></td>
+                        <td>
+                            <a th:href="@{/edit-virus/(id=${currentVirusViewModel.getId()})}">
+                                <button type="button" class="btn btn-outline-secondary">Edit</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/delete-virus/(id=${currentVirusViewModel.getId()})}">
+                                <button type="button" class="btn btn-outline-secondary">Delete</button>
+                            </a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

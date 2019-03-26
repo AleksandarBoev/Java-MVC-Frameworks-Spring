@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Testing</title>
+    <th:block th:replace="fragments/head_fragment">
+    </th:block>
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<th:block th:replace="fragments/nav_fragment">
+</th:block>
+
+<div id="test-div"></div>
+<button id="buttonStuff">Do stuff</button>
+
+<div class="form-check-inline">
+    <label class="form-check-label" for="viruses-radio">
+        <input type="radio" class="form-check-input" id="viruses-radio" name="optradio" value="option1">Viruses
+    </label>
+</div>
+<div class="form-check-inline">
+    <label class="form-check-label" for="capitals-radio">
+        <input type="radio" class="form-check-input" id="capitals-radio" name="optradio" value="option2">Capitals
+    </label>
+</div>
+
+
+<div class="container">
+    <table class="table table-hover" id="table-info">
+
+    </table>
+
+</div>
+
+
+<script>
+    const tableConnection = $('#table-info');
+    const capitalsRadioButton = $('#capitals-radio');
+    const virusesRadioButton = $('#viruses-radio');
+
+    capitalsRadioButton.click(() => {
+        tableConnection.empty();
+        tableConnection.append('<tr>');
+        tableConnection.append(`<th>#</th>`);
+        tableConnection.append(`<th>Name</th>`);
+        tableConnection.append(`<th>Latitude</th>`);
+        tableConnection.append(`<th>Longitude</th>`);
+        tableConnection.append('</tr>');
+        tableConnection.append('</thead>');
+        tableConnection.append('<tbody>');
+
+        let counter = 0;
+        fetch('http://localhost:8080/testing/fetch-capitals')
+            .then((response) => response.json())
+            .then((jsonCapitalArray) => jsonCapitalArray.forEach((capital) => {
+                tableConnection.append(`
+<tr>
+<td>${++counter}</td>
+<td>${capital.name}</td>
+<td>${capital.latitude}</td>
+<td>${capital.longitude}</td>
+</tr>`);
+            }));
+        tableConnection.append('</tbody>');
+    });
+
+    virusesRadioButton.click(() => {
+        tableConnection.empty();
+        tableConnection.append('<tr>');
+        tableConnection.append(`<th>#</th>`);
+        tableConnection.append(`<th>Name</th>`);
+        tableConnection.append(`<th>Magnitude</th>`);
+        tableConnection.append(`<th>Released on</th>`);
+        tableConnection.append(`<th>Action</th>`);
+        tableConnection.append('</tr>');
+        tableConnection.append('</thead>');
+        tableConnection.append('<tbody>');
+        let counter = 0;
+
+        fetch('http://localhost:8080/testing/fetch-viruses')
+            .then((resp) => resp.json())
+            .then((jsonArray) => {
+                jsonArray.forEach(virus => {
+                    tableConnection.append(`
+                    <tr>
+                    <td>${++counter}</td>
+                    <td>${virus.name}</td>
+                    <td>${virus.magnitude}</td>
+                    <td>${virus.releasedOn}</td>
+
+                    <td>
+    <a href="/edit-virus/?id=${virus.id}">
+          <button type="button" class="btn btn-outline-secondary">Edit</button>
+</a>
+</td>
+
+<td>
+    <a href="/delete-virus/?id=${virus.id}">
+          <button type="button" class="btn btn-danger">Delete</button>
+</a>
+</td>
+
+</tr>
+
+                    `)
+                })
+            });
+
+
+        tableConnection.append('</tbody>');
+
+    });
+</script>
+
+</body>
+</html>

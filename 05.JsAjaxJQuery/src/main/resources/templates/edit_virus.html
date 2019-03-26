@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Virus</title>
+    <th:block th:replace="fragments/head_fragment">
+    </th:block>
+</head>
+<div class="container-fluid">
+    <th:block th:replace="fragments/nav_fragment">
+    </th:block>
+
+    <div class="container">
+        <header>
+            <h1>Edit a virus!</h1>
+        </header>
+        <main>
+            <form th:object="${virusEditModel}" th:action="@{/edit-virus}" th:method="post"
+                  style="margin-top: 30px; margin-bottom: 30px">
+                <div class="form-group">
+                    <label for="virusName">Name</label>
+                    <input name="name" th:value="${virusViewEditModel.name}" class="form-control" id="virusName"
+                           type="text"/>
+                    <th:block th:if="${#fields.hasErrors('name')}">
+                        <th:block th:each="nameError: ${#fields.errors('name')}">
+                            <p class="text-danger" th:text="${nameError}"></p>
+                        </th:block>
+                    </th:block>
+                </div>
+
+                <div class="form-group">
+                    <label for="virusDescription">Description</label>
+                    <textarea th:text="${virusViewEditModel.description}" class="form-control" id="virusDescription"
+                              name="description"
+                              placeholder="Description here..."></textarea>
+                    <th:block th:if="${#fields.hasErrors('description')}">
+                        <th:block th:each="descriptionError: ${#fields.errors('description')}">
+                            <p class="text-danger" th:text="${descriptionError}"></p>
+                        </th:block>
+                    </th:block>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="virusSideEffect">Side effect</label>
+                    <input th:value="${virusViewEditModel.sideEffects}" class="form-control" id="virusSideEffect"
+                           type="text" name="sideEffects"
+                           placeholder="Side effect here..."/>
+                    <th:block th:if="${#fields.hasErrors('sideEffects')}">
+                        <th:block th:each="sideEffectError: ${#fields.errors('sideEffects')}">
+                            <p class="text-danger" th:text="${sideEffectError}"></p>
+                        </th:block>
+                    </th:block>
+                </div>
+
+                <div class="form-group">
+                    <label for="virusCreator">Creator</label>
+                    <input th:value="${virusViewEditModel.creator}" class="form-control" id="virusCreator" type="text"
+                           name="creator"
+                           placeholder="Creator here..."/>
+                    <th:block th:if="${#fields.hasErrors('creator')}">
+                        <th:block th:each="creatorError: ${#fields.errors('creator')}">
+                            <p class="text-danger" th:text="${creatorError}"></p>
+                        </th:block>
+                    </th:block>
+                </div>
+
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input th:checked="${virusViewEditModel.deadly}" class="form-check-input" type="checkbox"
+                               name="deadly"> Is deadly?
+                    </label>
+                </div>
+
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input th:checked="${virusViewEditModel.curable}" class="form-check-input" type="checkbox"
+                               name="curable"> Is curable?
+                    </label>
+                </div>
+
+                <div class="form-check" th:each="virusMutation : ${T(residentevil_app.domain.enums.Mutation).values()}">
+                    <th:block th:if="${{virusMutation}} == ${{virusViewEditModel.mutation}}">
+                        <input checked type="radio" th:id="${{virusMutation}}" th:value="${{virusMutation}}"
+                               name="mutation"/>
+                    </th:block>
+
+                    <th:block th:unless="${{virusMutation}} == ${{virusViewEditModel.mutation}}">
+                        <input type="radio" th:id="${{virusMutation}}" th:value="${{virusMutation}}"
+                               name="mutation"/>
+                    </th:block>
+                    <label th:for="${{virusMutation}}" th:text="${{virusMutation}}"></label>
+                </div>
+                <th:block th:if="${#fields.hasErrors('mutation')}">
+                    <th:block th:each="mutationError: ${#fields.errors('mutation')}">
+                        <p class="text-danger" th:text="${mutationError}"></p>
+                    </th:block>
+                </th:block>
+
+                <div class="form-group">
+                    <label for="turnoverRate">Turnover Rate</label>
+                    <input th:value="${virusViewEditModel.turnoverRate}" step="0.01" class="form-control"
+                           id="turnoverRate" type="number" name="turnoverRate"
+                           placeholder="Turnover Rate here..."/>
+                    <th:block th:if="${#fields.hasErrors('turnoverRate')}">
+                        <th:block th:each="turnOverRateError: ${#fields.errors('turnoverRate')}">
+                            <p class="text-danger" th:text="${turnOverRateError}"></p>
+                        </th:block>
+                    </th:block>
+                </div>
+
+                <div class="form-group">
+                    <label for="hoursUntilTurn">Hours until turn</label>
+                    <input th:value="${virusViewEditModel.hoursUntilTurn}" class="form-control" id="hoursUntilTurn"
+                           type="number" name="hoursUntilTurn"
+                           placeholder="Hours until turn here..."/>
+                    <th:block th:if="${#fields.hasErrors('hoursUntilTurn')}">
+                        <p class="text-danger" th:text="${#fields.errors('hoursUntilTurn').get(0)}"></p>
+                    </th:block>
+                </div>
+
+                <label for="selectMagnitude">Magnitude</label>
+                <select name="magnitude" class="form-control" id="selectMagnitude">
+                    <th:block th:each="virusMagnitude : ${T(residentevil_app.domain.enums.Magnitude).values()}">
+                        <th:block th:if="${{virusMagnitude}} == ${{virusViewEditModel.magnitude}}">
+                            <option selected
+                                    th:value="${{virusMagnitude}}"
+                                    th:text="${virusMagnitude.toString()}">
+                            </option>
+                        </th:block>
+                        <th:block th:unless="${{virusMagnitude}} == ${{virusViewEditModel.magnitude}}">
+                            <option
+                                    th:value="${{virusMagnitude}}"
+                                    th:text="${virusMagnitude.toString()}">
+                            </option>
+                        </th:block>
+                    </th:block>
+
+                </select>
+
+                <div class="form-group">
+                    <label for="capitals">Affected Capitals</label>
+                    <select name="capitalIds" multiple class="form-control" id="capitals">
+                        <th:block th:each="capital : ${allCapitals}">
+                            <th:block th:if="${virusViewEditModel.capitalIds.contains(capital.getId())}">
+                                <option selected
+                                        th:value="${capital.getId()}"
+                                        th:text="${capital.name}">
+                                </option>
+                            </th:block>
+                            <th:block th:unless="${virusViewEditModel.capitalIds.contains(capital.getId())}">
+                                <option
+                                        th:value="${capital.getId()}"
+                                        th:text="${capital.name}">
+                                </option>
+                            </th:block>
+                        </th:block>
+
+                    </select>
+                    <th:block th:if="${#fields.hasErrors('capitalIds')}">
+                        <p class="text-danger" th:text="${#fields.errors('capitalIds').get(0)}"></p>
+                    </th:block>
+                </div>
+
+                <button type="submit" class="btn resident-evil-white resident-evil-dark-red">Submit</button>
+
+            </form>
+        </main>
+    </div>
+</div>
+<body>
+</body>
+</html>
