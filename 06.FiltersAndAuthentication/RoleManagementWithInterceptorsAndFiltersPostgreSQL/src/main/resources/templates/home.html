@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<h1>Welcome to HOME!</h1>
+<h2 th:if="${#session.getAttribute('ROLE') == 'USER'}">Greetings user!</h2>
+<h2 th:if="${#session.getAttribute('ROLE') == null}">Hello stranger.</h2>
+
+<hr/>
+
+<form th:action="@{/create-user}" th:method="post">
+    <label>
+        Name: <input name="name" placeholder="Name..."/>
+    </label>
+
+    <label>
+        Job Description: <input name="jobDescription" placeholder="Job Description..."/>
+    </label>
+
+    <input type="submit" value="Create user"/>
+</form>
+
+<hr/>
+
+<button id="list-users">List users</button>
+<ul id="users-list">
+</ul>
+
+<script>
+    const ulUsersList = document.getElementById('users-list');
+
+    document.getElementById('list-users').addEventListener('click', () => {
+        fetch('get-users')
+            .then(response => response.json())
+            .then(jsonData => {
+                ulUsersList.innerHtml = '';
+                jsonData.forEach(user => {
+                    const newLiElement = document.createElement('li');
+                    newLiElement.textContent = user.name + ' | ' + user.jobDescription;
+                    ulUsersList.appendChild(newLiElement);
+                })
+            })
+    })
+</script>
+</body>
+</html>

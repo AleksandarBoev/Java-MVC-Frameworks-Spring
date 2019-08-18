@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<h1>Welcome to the PostgreSQL beginning фаза!</h1>
+<button id="user">Get user privileges!</button>
+<button id="guest">Stop user privileges.</button>
+
+<hr/>
+<p>Go to <a th:href="@{/important-stuff}">important-stuff</a> page. Only for users</p>
+<p>Go to <a th:href="@{/guest-stuff}">guest-stuff</a> page. Only for guests</p>
+<p>Go <a th:href="@{/home}">home</a></p>
+
+<script>
+    document.getElementById('user').addEventListener('click', () => {
+        fetch('/add-user-priviledges');
+    });
+
+    document.getElementById('guest').addEventListener('click', () => {
+        fetch('/remove-user-priviledges');
+    });
+</script>
+</body>
+</html>
