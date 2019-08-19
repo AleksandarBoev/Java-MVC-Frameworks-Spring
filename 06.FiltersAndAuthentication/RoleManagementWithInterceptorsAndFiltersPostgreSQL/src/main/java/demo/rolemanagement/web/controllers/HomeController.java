@@ -1,6 +1,7 @@
 package demo.rolemanagement.web.controllers;
 
 import demo.rolemanagement.domain.entities.User;
+
 import demo.rolemanagement.domain.models.binding.UserBindingModel;
 import demo.rolemanagement.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -32,7 +33,14 @@ public class HomeController {
 
     @GetMapping("/important-stuff")
     public String getImportantStuffPage() {
+        System.out.println("AAAAAAA");
+        System.out.println("BBBBBBB");
         return "important-stuff";
+    }
+
+    @GetMapping("/important-stuff/part2")
+    public String getImportantStuffPart2Page() {
+        return "more-important-stuff";
     }
 
     @GetMapping("/guest-stuff")
@@ -64,5 +72,17 @@ public class HomeController {
     @ResponseBody
     public Object getUsers() {
         return userRepository.findAll();
+    }
+
+    @GetMapping(value = "/error")
+    public String getErrorPage() {
+        System.out.println("Error encountered!");
+        return "custom-error";
+    }
+
+    @GetMapping("/custom-error")
+    public String getIndexAgain() {
+        System.out.println("Generating custom error...");
+        return "custom-error";
     }
 }

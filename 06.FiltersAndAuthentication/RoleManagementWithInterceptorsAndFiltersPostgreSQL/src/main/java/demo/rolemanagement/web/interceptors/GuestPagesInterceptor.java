@@ -11,7 +11,8 @@ public class GuestPagesInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (request.getSession().getAttribute("ROLE") != null) {
-            response.sendRedirect("/error");
+            request.getSession().setAttribute("errorMessage", "Only guests allowed!");
+            response.sendRedirect("/custom-error");
         }
         return true;
     }

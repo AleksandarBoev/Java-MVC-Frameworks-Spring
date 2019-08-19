@@ -37,7 +37,9 @@
         fetch('get-users')
             .then(response => response.json())
             .then(jsonData => {
-                ulUsersList.innerHtml = '';
+                while(ulUsersList.lastChild) {
+                    ulUsersList.removeChild(ulUsersList.lastChild);
+                }
                 jsonData.forEach(user => {
                     const newLiElement = document.createElement('li');
                     newLiElement.textContent = user.name + ' | ' + user.jobDescription;
