@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+
+<h1>Welcome to user page, mr. <span th:text="${((SecurityContext)#session.getAttribute('SPRING_SECURITY_CONTEXT')).getAuthentication().getName()}"></span></h1>
+<p>Your roles are:</p>
+<!--<ul th:each="role: ${#session.getAttribute('SPRING_SECURITY_CONTEXT').getAuthorities()}">-->
+<!--    <li th:text="${role}"></li>-->
+<!--</ul>-->
+
+<p>Back to <a th:href="@{/}">home</a> page</p>
+
+</body>
+</html>
